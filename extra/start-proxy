@@ -1,0 +1,13 @@
+#!/bin/sh
+
+sudo ./proxy \
+-config xq.ini \
+-host 0.0.0.0 \
+-enc_port 3081 \
+-dec_port 3082 \
+-enc_out_host 0.0.0.0 \
+-enc_out_port 3082  \
+-dec_out_host 0.0.0.0 \
+-dec_out_port 5000 \
+-rotate 9000 \
+-user xq-proxy

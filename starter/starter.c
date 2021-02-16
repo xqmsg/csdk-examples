@@ -45,6 +45,7 @@ int main(int argc, const char * argv[]) {
         }
         
         char pin[7] = {0};
+        printf("Confirmation message sent to %s.\n\n", email_address );
         printf( "Enter PIN: ");
         fflush(stdout);
         fgets( pin, 7, stdin );
@@ -123,6 +124,10 @@ int main(int argc, const char * argv[]) {
     // 6. Encrypt a new message
     const char* message = "Hello World";
     const char* recipients = info.mailOrPhone;
+    
+    const char* meta_content = "{\"subject\":\"Hello Subject\"}";
+    struct xq_metadata meta = xq_use_metadata( Metadata_Email, meta_content );
+    
     printf( "Encrypting message: %s...\n", message);
     
     struct xq_message_payload result = { 0,0 };
@@ -137,6 +142,7 @@ int main(int argc, const char * argv[]) {
                                     recipients, // The accounts that will be able to read this message.
                                     24, // The number of hours this message will be available
                                     0, // Prevent this message from being read more than once?
+                                    &meta, // Message metadata.
                                     &result,
                                     &err)) {
         fprintf(stderr, "[xq_encrypt_and_store_token] %li: %s\n", err.responseCode, err.content );

@@ -76,11 +76,10 @@ void *encrypt_data_handler( void* args ){
             EXPANDED_HEX_LENGTH, // The length of the key
             svr->recipients, // The recipients who have access to the key.
             24, // expire tokens in 24 hours
-            0, // delete on read
-            "data"
+            0 // delete on read
         };
         
-        if (!xq_svc_store_key(svr->config, &request, &result, &err) ) {
+        if (!xq_svc_store_key(svr->config, &request, 0, &result, &err) ) {
             fprintf(stderr, "Failed to store key: %s\n", err.content );
             return 0;
         }
